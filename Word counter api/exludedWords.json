@@ -1,0 +1,9 @@
+﻿{
+    "Articles": [ "the", "an", "a" ],
+    "Preposition": ["the","about","above","across","after","against","along","among","around",
+      "before","behind","between","beyond","but","concerning","despite","down","during","except",
+      "following","for","from","including","into","like","near","off","onto","out","over","past",
+      "plus","since","throughout","towards","under","until","upon","with","within","without"
+    ],
+    "PersonalPronouns": ""
+}
