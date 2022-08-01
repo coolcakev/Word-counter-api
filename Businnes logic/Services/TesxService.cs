@@ -1,4 +1,5 @@
 ﻿using Businnes_logic.Interfaces;
+using Businnes_logic.TextStrategy.Interfaces;
 using Domain.DTOs;
 using Domain.Enums.TextEnums;
 using System;
@@ -12,6 +13,13 @@ namespace Businnes_logic.Services
 {
     public class TextService : ITextService
     {
+        private readonly ITextStrategy _textStrategy;
+
+        public TextService(ITextStrategy textStrategy)
+        {
+            _textStrategy = textStrategy;
+        }
+
         public Task<IEnumerable<WordStatistic>> GetWord(TextMode mode, TextDTO textDTO, ExludedWords exludedWords)
         {
             if (string.IsNullOrWhiteSpace(textDTO.Text))
@@ -23,7 +31,7 @@ namespace Businnes_logic.Services
             {
                 var needElements = GetNeedWord(textDTO.Text, exludedWords);
 
-                needElements = GetModifiedByGroup(needElements, mode);
+                needElements = _textStrategy.GetWords(needElements, mode);
 
                 var groupedWords = needElements.GroupBy(x => x).OrderByDescending(x => x.Count()).ToList();
 
@@ -71,33 +79,6 @@ namespace Businnes_logic.Services
             }
             return needElements;
         }
-        private List<string> GetModifiedByGroup(List<string> needElements, TextMode mode) => mode switch
-        {
-            TextMode.One => needElements,
-            TextMode.Two => GetTwoWord(needElements),
-            TextMode.Three => GetTreeWord(needElements),
-        };
-
-        private List<string> GetTreeWord(List<string> needElements)
-        {
-            var modifiedNeedElements = new List<string>();
-            for (int i = 0; i < needElements.Count - 2; i++)
-            {
-                modifiedNeedElements.Add($"{needElements[i]} {needElements[i + 1]} {needElements[i + 2]}");
-            }
-            return modifiedNeedElements;
-        }
-
-        private List<string> GetTwoWord(List<string> needElements)
-        {
-            var modifiedNeedElements = new List<string>();
-            for (int i = 0; i < needElements.Count - 1; i++)
-            {
-                modifiedNeedElements.Add($"{needElements[i]} {needElements[i + 1]}");
-            }
-            return modifiedNeedElements;
-        }
-
 
     }
 }

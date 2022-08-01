@@ -1,5 +1,8 @@
 using Businnes_logic.Interfaces;
 using Businnes_logic.Services;
+using Businnes_logic.TextStrategy;
+using Businnes_logic.TextStrategy.Interfaces;
+using Businnes_logic.TextStrategy.StrategyItem;
 using Domain.DTOs;
 using Domain.Enums;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +51,17 @@ namespace Word_counter_api
             });
             services.AddMemoryCache();
             services.AddScoped<ITextService, TextService>();
+
+            services.AddScoped<OneWord>();
+            services.AddScoped<TwoWords>();
+            services.AddScoped<ThreeWords>();
+            services.AddScoped<ITextFactory, TextFactory>();
+            services.AddScoped<ITextStrategy, TextStrategy>();
+            services.AddScoped<ITextType[]>(provider =>
+            {
+                var factory = (ITextFactory)provider.GetService(typeof(ITextFactory));
+                return factory.Create();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
