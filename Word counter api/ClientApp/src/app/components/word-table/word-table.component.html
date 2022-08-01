@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Word</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let wordsStatistic of wordsStatistics$ | async; index as i">
+      <td>{{ i+1 }}. {{wordsStatistic.word}}</td>
+      <td>{{ wordsStatistic.count}} ({{wordsStatistic.frequency|number:"1.1-2"}}%)</td>
+    </tr>   
+  </tbody>
+</table>

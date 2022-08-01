@@ -9,9 +9,7 @@ namespace Domain.DTOs
 {
     public class TextDTO
     {
-        [Required]
-        public string Text { get; set; }
-        [Required]
-        public int Count { get; set; }
+        public string Text { get; set; }      
+        public int? Count { get; set; }
     }
 }

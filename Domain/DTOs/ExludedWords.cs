@@ -10,5 +10,9 @@ namespace Domain.DTOs
     {
         public List<string> Articles { get; set; }
         public List<string> Preposition { get; set; }
+        public List<string> PersonalPronouns { get; set; }
+        public List<string> SpecialWord { get; set; }
+        public List<string> TimeWord { get; set; }
+        public List<string> OtherWords { get; set; }
     }
 }

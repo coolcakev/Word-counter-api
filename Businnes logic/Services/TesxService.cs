@@ -12,39 +12,33 @@ namespace Businnes_logic.Services
 {
     public class TextService : ITextService
     {
-        public Task<GlobalStatistic> GetWord(TextMode mode, TextDTO textDTO, ExludedWords exludedWords)
+        public Task<IEnumerable<WordStatistic>> GetWord(TextMode mode, TextDTO textDTO, ExludedWords exludedWords)
         {
+            if (string.IsNullOrWhiteSpace(textDTO.Text))
+            {
+                return Task.FromResult(Enumerable.Empty<WordStatistic>());
+            }
+
             return Task.Run(() =>
             {
-                var globalStatistic = new GlobalStatistic()
-                {
-                    Total = 0,
-                    WordStatistics = new List<WordStatistic>()
-                };
-                if (string.IsNullOrWhiteSpace(textDTO.Text))
-                {
-                    return globalStatistic;
-                }
-
                 var needElements = GetNeedWord(textDTO.Text, exludedWords);
 
-                needElements = GetModifiedByGroup(needElements, mode);        
-                
-                var groupedWords = needElements.GroupBy(x => x).OrderByDescending(x => x.Count());
+                needElements = GetModifiedByGroup(needElements, mode);
 
-                globalStatistic.Total += groupedWords.Sum(x => x.Count());
-                foreach (var groupedWord in groupedWords.Take(textDTO.Count))
-                {
+                var groupedWords = needElements.GroupBy(x => x).OrderByDescending(x => x.Count()).ToList();
 
-                    var wordStatistic = new WordStatistic()
-                    {
-                        Word = groupedWord.Key,
-                        Count = groupedWord.Count(),
-                    };
+                var total = groupedWords.Sum(x => x.Count());
 
-                    globalStatistic.WordStatistics.Add(wordStatistic);
+                if (textDTO.Count.HasValue) {
+                    groupedWords = groupedWords.Take(textDTO.Count.Value).ToList();
                 }
-                return globalStatistic;
+                var wordStatistics = groupedWords.Select(groupedWord => new WordStatistic() {
+                    Word = groupedWord.Key,
+                    Count = groupedWord.Count(),
+                    Frequency= (groupedWord.Count()*1.0/ total)*100,
+                });
+                
+                return wordStatistics;
             });
 
         }
@@ -54,17 +48,25 @@ namespace Businnes_logic.Services
             var exludesString = new List<string>();
             exludesString.AddRange(exludedWords.Articles);
             exludesString.AddRange(exludedWords.Preposition);
+            exludesString.AddRange(exludedWords.PersonalPronouns);
+            exludesString.AddRange(exludedWords.SpecialWord);
+            exludesString.AddRange(exludedWords.TimeWord);
+            exludesString.AddRange(exludedWords.OtherWords);
 
-            var textArray = text.Split(',', ' ', '.');
+            var textArray = text.Split(',', ' ', '.','\n');
             var needElements = new List<string>();
 
             foreach (var word in textArray)
             {
+                if (word.Contains("\'")) {
+                    continue;
+                }
+
                 var regex = new Regex(@"[A-Za-z]+");
                 var match = regex.Match(word);
-                if (match.Success && !exludesString.Contains(word))
+                if (match.Success && !exludesString.Contains(word.ToLower()))
                 {
-                    needElements.Add(match.Value);
+                    needElements.Add(match.Value.ToLower());
                 }
             }
             return needElements;
@@ -95,7 +97,7 @@ namespace Businnes_logic.Services
             }
             return modifiedNeedElements;
         }
-       
+
 
     }
 }

@@ -40,6 +40,12 @@ namespace Word_counter_api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Word_counter_api", Version = "v1" });
             });
+            services.AddCors((options) => {
+                options.AddPolicy("Default", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+                });
+            });
             services.AddMemoryCache();
             services.AddScoped<ITextService, TextService>();
         }
@@ -61,7 +67,7 @@ namespace Word_counter_api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Word_counter_api v1"));
             }
-
+            app.UseCors("Default");
             app.UseHttpsRedirection();
 
             app.UseRouting();

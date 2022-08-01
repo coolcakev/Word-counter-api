@@ -10,6 +10,6 @@ namespace Businnes_logic.Interfaces
 {
     public interface ITextService
     {
-        Task<GlobalStatistic> GetWord(TextMode mode, TextDTO textDTO, ExludedWords exludedWords);       
+        Task<IEnumerable<WordStatistic>> GetWord(TextMode mode, TextDTO textDTO, ExludedWords exludedWords);
     }
 }

@@ -10,6 +10,7 @@ namespace Domain.DTOs
     {
         public string Word { get; set; }
         public int Count { get; set; }
+        public double Frequency { get; set; }
 
     }
 }

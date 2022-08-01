@@ -1,0 +1,9 @@
+<div class="form-group" style="margin-bottom: 10px">
+  <input type="number" class="form-control" [ngModel]="count$ | async" (ngModelChange)="countChange($event)" />
+</div>
+<div class="btn-group" role="group">
+  <button (click)="buttonClick($event,WordMode.ONE)" type="button" class="btn btn-secondary">One</button>
+  <button (click)="buttonClick($event,WordMode.TWO)" type="button" class="btn btn-secondary">Two</button>
+  <button (click)="buttonClick($event,WordMode.THREE)" type="button" class="btn btn-secondary">Three</button>
+</div>
+<app-word-table></app-word-table>

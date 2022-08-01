@@ -1,0 +1,4 @@
+<div class="form-group" style="margin-bottom:15px">
+  <textarea class="form-control" placeholder="Write text" [ngModel]="text$ | async" (ngModelChange)="textChange($event)"> </textarea>
+  <button (click)="analyze($event)" class="btn btn-primary">analyze</button>
+</div>

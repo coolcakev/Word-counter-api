@@ -6,6 +6,7 @@ using Domain.Enums.TextEnums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Threading.Tasks;
 using Word_counter_api.Helpers;
 
@@ -23,41 +24,18 @@ namespace Word_counter_api.Controllers
             _tesxService = tesxService;
             _cache = cache;
         }
-        [HttpPost("one")]
-        public async Task<IActionResult> GetOneWord([FromBody]TextDTO textDTO)
+        [HttpPost("{textMode}")]
+        public async Task<IActionResult> GetWord(string textMode,[FromBody]TextDTO textDTO)
         {
-            if (textDTO == null) {
+            var isSuccessParse = Enum.TryParse(typeof(TextMode), textMode,true,out object result);
+            if (textDTO == null|| !isSuccessParse) {
                 return BadRequest();
             }
 
             var excludedWordsCashe = CacheHelper.GetItemFromCacheMemory<ExludedWords>(CasheType.ExcludedWords.ToString(), _cache);
 
-            var result = await _tesxService.GetWord(TextMode.One, textDTO, excludedWordsCashe);
-            return Ok(result);
-        }
-        [HttpPost("two")]
-        public async Task<IActionResult> GetTwoWord(TextDTO textDTO)
-        {
-            if (textDTO == null)
-            {
-                return BadRequest();
-            }
-            var excludedWordsCashe = CacheHelper.GetItemFromCacheMemory<ExludedWords>(CasheType.ExcludedWords.ToString(), _cache);
-
-            var result = await _tesxService.GetWord(TextMode.Two, textDTO, excludedWordsCashe);
-            return Ok(result);
-        }
-        [HttpPost("three")]
-        public async Task<IActionResult> GetTreeWord(TextDTO textDTO)
-        {
-            if (textDTO == null)
-            {
-                return BadRequest();
-            }
-            var excludedWordsCashe = CacheHelper.GetItemFromCacheMemory<ExludedWords>(CasheType.ExcludedWords.ToString(), _cache);
-
-            var result = await _tesxService.GetWord(TextMode.Three, textDTO, excludedWordsCashe);
-            return Ok(result);
-        }
+            var words = await _tesxService.GetWord((TextMode)result, textDTO, excludedWordsCashe);
+            return Ok(words);
+        }       
     }
 }
