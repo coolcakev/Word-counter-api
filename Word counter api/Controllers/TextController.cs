@@ -31,7 +31,7 @@ namespace Word_counter_api.Controllers
             if (textDTO == null|| !isSuccessParse) {
                 return BadRequest();
             }
-
+         
             var excludedWordsCashe = CacheHelper.GetItemFromCacheMemory<ExludedWords>(CasheType.ExcludedWords.ToString(), _cache);
 
             var words = await _tesxService.GetWord((TextMode)result, textDTO, excludedWordsCashe);

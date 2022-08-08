@@ -22,7 +22,7 @@ namespace Businnes_logic.Services
 
         public Task<IEnumerable<WordStatistic>> GetWord(TextMode mode, TextDTO textDTO, ExludedWords exludedWords)
         {
-            if (string.IsNullOrWhiteSpace(textDTO.Text))
+            if (textDTO ==null|| string.IsNullOrWhiteSpace(textDTO.Text))
             {
                 return Task.FromResult(Enumerable.Empty<WordStatistic>());
             }
@@ -52,14 +52,17 @@ namespace Businnes_logic.Services
         }
         private List<string> GetNeedWord(string text, ExludedWords exludedWords)
         {
+            if (text==null) {
+                return new List<string>();
+            }
 
             var exludesString = new List<string>();
-            exludesString.AddRange(exludedWords.Articles);
-            exludesString.AddRange(exludedWords.Preposition);
-            exludesString.AddRange(exludedWords.PersonalPronouns);
-            exludesString.AddRange(exludedWords.SpecialWord);
-            exludesString.AddRange(exludedWords.TimeWord);
-            exludesString.AddRange(exludedWords.OtherWords);
+            exludesString.AddRange(exludedWords?.Articles??new List<string>());
+            exludesString.AddRange(exludedWords?.Preposition ?? new List<string>());
+            exludesString.AddRange(exludedWords?.PersonalPronouns ?? new List<string>());
+            exludesString.AddRange(exludedWords?.SpecialWord ?? new List<string>());
+            exludesString.AddRange(exludedWords?.TimeWord ?? new List<string>());
+            exludesString.AddRange(exludedWords?.OtherWords ?? new List<string>());
 
             var textArray = text.Split(',', ' ', '.','\n');
             var needElements = new List<string>();

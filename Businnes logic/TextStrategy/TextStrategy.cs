@@ -10,16 +10,16 @@ namespace Businnes_logic.TextStrategy
 {
     public class TextStrategy: ITextStrategy
 	{
-		private readonly ITextType[] _operators;
+		private readonly IEnumerable<ITextType> _operators;
 
-		public TextStrategy(ITextType[] operators)
+		public TextStrategy(IEnumerable<ITextType> operators)
 		{
 			_operators = operators;
 		}		
 
         public List<string> GetWords(List<string> needElements, TextMode mode)
         {
-            return _operators.FirstOrDefault(x=>x.Mode==mode)?.GetWords(needElements) ?? throw new ArgumentNullException(nameof(mode));
+            return _operators?.FirstOrDefault(x=>x.Mode==mode)?.GetWords(needElements) ?? throw new ArgumentNullException(nameof(mode));
 
 		}
     }

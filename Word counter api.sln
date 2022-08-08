@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Word counter api", "Word counter api\Word counter api.csproj", "{697BD040-6009-455B-AC25-FE3C4B83B9A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Word counter api", "Word counter api\Word counter api.csproj", "{697BD040-6009-455B-AC25-FE3C4B83B9A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Businnes logic", "Businnes logic\Businnes logic.csproj", "{D67A0EAF-8443-41B9-96EF-404147B9184F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Businnes logic", "Businnes logic\Businnes logic.csproj", "{D67A0EAF-8443-41B9-96EF-404147B9184F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{CFD845C0-C3E8-45BF-A30B-E51C3845E8FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{CFD845C0-C3E8-45BF-A30B-E51C3845E8FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{178AF13F-E677-42B0-861B-2756511A58CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CFD845C0-C3E8-45BF-A30B-E51C3845E8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFD845C0-C3E8-45BF-A30B-E51C3845E8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFD845C0-C3E8-45BF-A30B-E51C3845E8FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178AF13F-E677-42B0-861B-2756511A58CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178AF13F-E677-42B0-861B-2756511A58CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178AF13F-E677-42B0-861B-2756511A58CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178AF13F-E677-42B0-861B-2756511A58CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
